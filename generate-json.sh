@@ -1,0 +1,2 @@
+# Script to generate the JSON files
+wget "http://app.carbongis.com.au/recRegistry/read.php?file_url=http://ret.cleanenergyregulator.gov.au/ArticleDocuments/327/RET-data-0315.xls.aspx&col_qty=AH&col_kw=AI" -O json/rec-solar_panel-latest.json

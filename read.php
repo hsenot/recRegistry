@@ -18,7 +18,7 @@
 	try {
 		// File name to the XLS spreadsheet
 		$p_file_url = "http://ret.cleanenergyregulator.gov.au/ArticleDocuments/327/RET-data-0315.xls.aspx";
-		if (isset($_REQUEST['sheet']))
+		if (isset($_REQUEST['file_url']))
 		{
 			$p_file_url = $_REQUEST['file_url'];
 		}
@@ -36,12 +36,12 @@
 		{
 			$p_col_postcode=$_REQUEST['col_postcode'];
 		}
-		$p_col_qty = 'AB';
+		$p_col_qty = 'AH';
 		if (isset($_REQUEST['col_qty']))
 		{
 			$p_col_qty=$_REQUEST['col_qty'];
 		}
-		$p_col_kw = 'AC';
+		$p_col_kw = 'AI';
 		if (isset($_REQUEST['col_kw']))
 		{
 			$p_col_kw=$_REQUEST['p_col_kw'];
