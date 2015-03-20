@@ -34,3 +34,8 @@ Parameters:
 * col_kw
   * Description: name of the rated output information column
   * Default: AI
+
+
+# Known Issues
+
+Despite some filtering, the amount of memory needed to read a REC registry spreadsheet can exceed local limits.

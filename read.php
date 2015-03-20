@@ -69,9 +69,9 @@
 				if ($worksheetName == $p_sheet)
 				{
 					if (in_array($column,$col_array_keys)) {
-						if ($row >= $headerLinesNb) {
+						//if ($row >= $headerLinesNb) {
 							return true;
-						}
+						//}
 						return false;
 					}
 					return false;
@@ -123,6 +123,11 @@
 
 		}
 
+		$date=new DateTime(); //this returns the current date time
+		$datestr = $date->format('Ymd-His');
+
+		$overall_arr=array("meta"=>array("file"=>$p_file_url,"sheet"=>$p_sheet,"col_postcode"=>$p_col_postcode,"col_qty"=>$p_col_qty,"col_kw"=>$p_col_kw,"internal_timestamp"=>$objPHPExcel->getActiveSheet()->getCell("A3")->getFormattedValue(),"json_timestamp"=>$datestr),"data"=>$arr);
+
 		// Required to cater for IE
 		//header("Content-Type: application/json");
 		header("Content-Type: text/html");
@@ -130,7 +135,7 @@
 		header("Access-Control-Allow-Origin: *");
 
 		// Outputting the content
-		echo json_encode($arr);
+		echo json_encode($overall_arr, JSON_PRETTY_PRINT);
 	}
 	catch (Exception $e) {
 		trigger_error("Caught Exception: " . $e->getMessage(), E_USER_ERROR);
