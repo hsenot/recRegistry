@@ -110,7 +110,12 @@
 					//echo '        Cell - ' , $cell->getColumn() , ' - ' , $cell->getCalculatedValue() , EOL;
 					if (in_array($cell->getColumn(),$col_array_keys))  {
 						//echo '        Cell - ' , $cell->getColumn() , ' - ' ,$col_array[$cell->getColumn()],' - ', $cell->getCalculatedValue() , EOL;
-						$arr_line[$col_array[$cell->getColumn()]] = $cell->getCalculatedValue();
+						$cell_val = $cell->getCalculatedValue();
+						if ($cell->getColumn()==$p_col_kw)
+						{
+							$cell_val = round(floatval($cell->getCalculatedValue()),1);
+						}
+						$arr_line[$col_array[$cell->getColumn()]] = $cell_val;
 					}
 				}
 				// If no postcode information, don't add it to the output json
