@@ -47,6 +47,7 @@
 			$p_col_kw=$_REQUEST['col_kw'];
 		}
 		$col_array = array($p_col_postcode=>"postcode",$p_col_qty=>"install_qty",$p_col_kw=>"rated_output_kw");
+		$col_array_keys=array_keys($col_array);
 
 		// Header may contain some interesting info (like data relevance date)
 		$headerLinesNb = 4;
@@ -59,7 +60,32 @@
 		file_put_contents($staged_file_path , $file_in_a_string);
 		//echo date('H:i:s') , " Loading Excel file: ".$staged_file_path , EOL;
 		$callStartTime = microtime(true);
-		$objPHPExcel = PHPExcel_IOFactory::load($staged_file_path);
+
+		// Reader filter to minimise memory consumption
+		class MyReadFilter implements PHPExcel_Reader_IReadFilter
+		{
+			public function readCell($column, $row, $worksheetName = '') {
+				global $p_sheet, $headerLinesNb, $col_array_keys;
+				if ($worksheetName == $p_sheet)
+				{
+					if (in_array($column,$col_array_keys)) {
+						if ($row >= $headerLinesNb) {
+							return true;
+						}
+						return false;
+					}
+					return false;
+				}
+				return false;
+			}
+		}
+		//echo date('H:i:s') , " Create Excel5 reader" , EOL;
+		$objReader = PHPExcel_IOFactory::createReader('Excel5');
+		$objReader->setReadFilter( new MyReadFilter() );
+		//echo date('H:i:s') , " Load from file" , EOL;
+		$objPHPExcel = $objReader->load($staged_file_path);
+
+		//$objPHPExcel = PHPExcel_IOFactory::load($staged_file_path);
 		$callEndTime = microtime(true);
 		$callTime = $callEndTime - $callStartTime;
 		// Echo loading time
@@ -79,13 +105,15 @@
 
 				$arr_line = array();
 				foreach ($cellIterator as $cell) {
-					if (in_array($cell->getColumn(),array_keys($col_array)))  {
+					//echo '        Cell - ' , $cell->getColumn() , ' - ' , $cell->getCalculatedValue() , EOL;
+					if (in_array($cell->getColumn(),$col_array_keys))  {
 						//echo '        Cell - ' , $cell->getColumn() , ' - ' ,$col_array[$cell->getColumn()],' - ', $cell->getCalculatedValue() , EOL;
 						$arr_line[$col_array[$cell->getColumn()]] = $cell->getCalculatedValue();
 					}
 				}
 				// If no postcode information, don't add it to the output json
-				if ($arr_line["postcode"])
+				//echo print_r($arr_line);
+				if (isset($arr_line["postcode"]) && $arr_line["postcode"])
 				{
 					$arr[]=$arr_line;
 				}

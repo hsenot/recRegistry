@@ -10,6 +10,7 @@ A set of tools to expose the REC registry data in JSON
 * git submodule update --init --recursive
 * mkdir json
 * chmod 755 generate-json.sh
+* chmod 777 staging
 * cp inc/database.inc.php.sample inc/database.inc.php
 * [optional] Adjust database settings to your environment
 
