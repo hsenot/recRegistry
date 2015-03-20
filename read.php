@@ -44,7 +44,7 @@
 		$p_col_kw = 'AI';
 		if (isset($_REQUEST['col_kw']))
 		{
-			$p_col_kw=$_REQUEST['p_col_kw'];
+			$p_col_kw=$_REQUEST['col_kw'];
 		}
 		$col_array = array($p_col_postcode=>"postcode",$p_col_qty=>"install_qty",$p_col_kw=>"rated_output_kw");
 
