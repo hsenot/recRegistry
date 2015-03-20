@@ -1,6 +1,6 @@
 # recRegistry
 
-A set of tools to machine read the REC registry data
+A set of tools to expose the REC registry data in JSON
 
 
 # Cloning
@@ -8,6 +8,10 @@ A set of tools to machine read the REC registry data
 * git clone git@github.com:hsenot/recRegistry.git
 * cd recRegistry
 * git submodule update --init --recursive
+* mkdir json
+* chmod 755 generate-json.sh
+* cp inc/database.inc.php.sample inc/database.inc.php
+* [optional] Adjust database settings to your environment
 
 
 # API
