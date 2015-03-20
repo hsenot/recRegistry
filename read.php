@@ -82,6 +82,7 @@
 		//echo date('H:i:s') , " Create Excel5 reader" , EOL;
 		$objReader = PHPExcel_IOFactory::createReader('Excel5');
 		$objReader->setReadFilter( new MyReadFilter() );
+		$objReader->setLoadSheetsOnly($p_sheet);
 		//echo date('H:i:s') , " Load from file" , EOL;
 		$objPHPExcel = $objReader->load($staged_file_path);
 
